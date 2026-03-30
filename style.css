@@ -28,6 +28,56 @@ body{
 a{text-decoration:none;color:inherit}
 button{font:inherit;cursor:pointer;border:none}
 
+/* LOADER */
+.loader{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:
+    radial-gradient(circle at center, rgba(204,122,255,0.14), transparent 30%),
+    linear-gradient(135deg, #030303 0%, #0c0814 55%, #030303 100%);
+  transition:opacity .8s ease, visibility .8s ease;
+}
+.loader.hidden{
+  opacity:0;
+  visibility:hidden;
+}
+.loader-content{
+  width:min(420px, 88vw);
+  text-align:center;
+}
+.loader-logo{
+  font-size:2.2rem;
+  font-weight:900;
+  letter-spacing:.18em;
+  margin-bottom:22px;
+  text-shadow:0 0 25px rgba(204,122,255,.35);
+}
+.loader-bar{
+  width:100%;
+  height:8px;
+  border-radius:999px;
+  overflow:hidden;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.08);
+}
+.loader-fill{
+  display:block;
+  height:100%;
+  width:0%;
+  border-radius:999px;
+  background:linear-gradient(90deg, var(--pink), var(--purple));
+  box-shadow:0 0 22px rgba(204,122,255,.4);
+  animation:loadBar 2.2s ease forwards;
+}
+.loader-content p{
+  margin-top:14px;
+  color:rgba(255,255,255,.65);
+}
+
 .site-bg{
   position:fixed;
   inset:0;
@@ -36,7 +86,7 @@ button{font:inherit;cursor:pointer;border:none}
   z-index:0;
 }
 
-#particles, #cursor-trail, #mouse-light{
+#particles, #cursor-trail, #mouse-light, #stars{
   position:absolute;
   inset:0;
 }
@@ -57,6 +107,37 @@ button{font:inherit;cursor:pointer;border:none}
 .orb-2{width:150px;height:150px;right:10%;top:30%;background:rgba(128,0,255,.18);animation-delay:1s}
 .orb-3{width:190px;height:190px;left:18%;bottom:16%;background:rgba(204,122,255,.18);animation-delay:2s}
 .orb-4{width:170px;height:170px;right:22%;bottom:12%;background:rgba(128,0,255,.16);animation-delay:3s}
+
+.cinematic-fog{
+  position:absolute;
+  width:60vw;
+  height:60vw;
+  border-radius:50%;
+  filter:blur(120px);
+  opacity:.12;
+  animation:fogMove 16s ease-in-out infinite;
+}
+.fog-1{
+  left:-10%;
+  bottom:-10%;
+  background:rgba(204,122,255,.25);
+}
+.fog-2{
+  right:-10%;
+  top:10%;
+  background:rgba(128,0,255,.22);
+  animation-delay:3s;
+}
+
+.star{
+  position:absolute;
+  width:2px;
+  height:2px;
+  border-radius:50%;
+  background:rgba(255,255,255,.75);
+  box-shadow:0 0 8px rgba(255,255,255,.55);
+  animation:twinkle linear infinite;
+}
 
 .container{
   width:min(1120px, calc(100% - 48px));
@@ -166,6 +247,12 @@ button{font:inherit;cursor:pointer;border:none}
   font-size:1.1rem;
   color:var(--muted);
 }
+.hero-desc{
+  margin:16px 0 0;
+  max-width:640px;
+  color:rgba(255,255,255,.62);
+  line-height:1.7;
+}
 .hero-buttons{
   margin-top:32px;
   display:flex;
@@ -212,9 +299,27 @@ button{font:inherit;cursor:pointer;border:none}
   box-shadow:0 0 40px rgba(128,0,255,.06);
 }
 
+.cinematic-card{
+  position:relative;
+  overflow:hidden;
+}
+.cinematic-card::before{
+  content:"";
+  position:absolute;
+  inset:-1px;
+  background:linear-gradient(135deg, rgba(204,122,255,.18), transparent 30%, transparent 70%, rgba(128,0,255,.12));
+  opacity:0;
+  transition:.35s ease;
+  pointer-events:none;
+}
+.cinematic-card:hover::before{
+  opacity:1;
+}
+
 .hero-video{
   border-radius:22px;
   overflow:hidden;
+  box-shadow:0 0 80px rgba(128,0,255,0.14);
 }
 .video-frame{
   aspect-ratio:16/9;
@@ -277,6 +382,7 @@ button{font:inherit;cursor:pointer;border:none}
 .info-card:hover, .product-card:hover, .social-card:hover{
   transform:translateY(-6px);
   background:var(--card-hover);
+  box-shadow:0 0 30px rgba(204,122,255,.10);
 }
 .info-card h4, .product-card h4, .social-card h4{
   margin:14px 0 0;
@@ -389,6 +495,18 @@ button{font:inherit;cursor:pointer;border:none}
 @keyframes pulseGlow{
   0%,100%{transform:scale(1);opacity:.75}
   50%{transform:scale(1.06);opacity:.95}
+}
+@keyframes fogMove{
+  0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(30px,-20px) scale(1.08)}
+}
+@keyframes twinkle{
+  0%,100%{opacity:.2; transform:scale(.8)}
+  50%{opacity:1; transform:scale(1.2)}
+}
+@keyframes loadBar{
+  0%{width:0%}
+  100%{width:100%}
 }
 
 @media (max-width: 900px){
