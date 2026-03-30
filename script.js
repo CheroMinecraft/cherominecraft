@@ -1,13 +1,16 @@
 const mouseLight = document.getElementById("mouse-light");
 const cursorTrail = document.getElementById("cursor-trail");
 const particleContainer = document.getElementById("particles");
+const starsContainer = document.getElementById("stars");
 const moreProducts = document.getElementById("more-products");
 const toggleProducts = document.getElementById("toggle-products");
 const parallaxLayers = document.querySelectorAll(".parallax-layer");
+const loader = document.getElementById("loader");
+const soundButtons = document.querySelectorAll(".sfx-btn");
 
 let audioLevel = 0.18;
 
-// 🔥 PARTICLES
+// PARTICLES
 function createParticles() {
   for (let i = 0; i < 54; i++) {
     const particle = document.createElement("span");
@@ -30,14 +33,28 @@ function createParticles() {
   }
 }
 
-// 🎯 MOUSE LIGHT
+// STARS
+function createStars() {
+  for (let i = 0; i < 45; i++) {
+    const star = document.createElement("span");
+    star.className = "star";
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.animationDuration = `${2 + Math.random() * 4}s`;
+    star.style.animationDelay = `${Math.random() * 3}s`;
+    star.style.opacity = `${0.2 + Math.random() * 0.8}`;
+    starsContainer.appendChild(star);
+  }
+}
+
+// MOUSE LIGHT
 function updateMouseLight(x, y) {
   const xPercent = (x / window.innerWidth) * 100;
   const yPercent = (y / window.innerHeight) * 100;
   mouseLight.style.background = `radial-gradient(circle at ${xPercent}% ${yPercent}%, rgba(204,122,255,0.18), transparent 16%)`;
 }
 
-// ✨ CURSOR TRAIL
+// CURSOR TRAIL
 function addTrailDot(x, y) {
   const dot = document.createElement("span");
   dot.className = "trail-dot";
@@ -54,7 +71,7 @@ function addTrailDot(x, y) {
   }, 700);
 }
 
-// 🧠 PARALLAX SCROLL
+// PARALLAX
 function handleScroll() {
   const scrollY = window.scrollY;
   parallaxLayers.forEach(layer => {
@@ -63,7 +80,7 @@ function handleScroll() {
   });
 }
 
-// 🎧 AUDIO REACTIVE (mic based)
+// AUDIO REACTIVE
 async function startAudioReactive() {
   try {
     const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -89,7 +106,39 @@ async function startAudioReactive() {
   }
 }
 
-// 🛍️ SHOW MORE PRODUCTS
+// BUTTON SOUND
+function playClickSound() {
+  try {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.setValueAtTime(480, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(260, audioContext.currentTime + 0.08);
+
+    gainNode.gain.setValueAtTime(0.001, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.05, audioContext.currentTime + 0.01);
+    gainNode.gain.exponentialRampToValueAtTime(0.001, audioContext.currentTime + 0.12);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.12);
+  } catch (error) {
+    console.log("Sound blocked by browser.");
+  }
+}
+
+// LOADER
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    loader.classList.add("hidden");
+  }, 2200);
+});
+
+// SHOW MORE PRODUCTS
 toggleProducts.addEventListener("click", () => {
   moreProducts.classList.toggle("show");
   toggleProducts.textContent = moreProducts.classList.contains("show")
@@ -97,7 +146,12 @@ toggleProducts.addEventListener("click", () => {
     : "View More Products";
 });
 
-// 🖱️ EVENTS
+// SOUND BUTTONS
+soundButtons.forEach((btn) => {
+  btn.addEventListener("click", playClickSound);
+});
+
+// EVENTS
 window.addEventListener("mousemove", (e) => {
   updateMouseLight(e.clientX, e.clientY);
   addTrailDot(e.clientX, e.clientY);
@@ -105,7 +159,8 @@ window.addEventListener("mousemove", (e) => {
 
 window.addEventListener("scroll", handleScroll);
 
-// 🚀 INIT
+// INIT
 createParticles();
+createStars();
 startAudioReactive();
 handleScroll();
