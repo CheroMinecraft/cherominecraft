@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chéro Minecraft</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="site-bg">
+    <div class="floating-orb orb-1"></div>
+    <div class="floating-orb orb-2"></div>
+    <div class="floating-orb orb-3"></div>
+    <div class="floating-orb orb-4"></div>
+    <div id="particles"></div>
+    <div id="cursor-trail"></div>
+    <div id="mouse-light"></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="container nav-wrap">
+      <h1 class="logo">CHÉRO</h1>
+      <div class="nav-links">
+        <a href="#about">About</a>
+        <a href="#videos">Videos</a>
+        <a href="#shop">Shop</a>
+        <a href="#socials">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero parallax-section">
+    <div class="hero-gradient parallax-layer" data-speed="0.12"></div>
+    <div class="hero-glow hero-glow-1 parallax-layer" data-speed="0.10"></div>
+    <div class="hero-glow hero-glow-2 parallax-layer" data-speed="-0.08"></div>
+    <div class="hero-glow hero-glow-3 parallax-layer" data-speed="0.05"></div>
+
+    <div class="container hero-content">
+      <div class="hero-text">
+        <div class="badge">Cinematic Gaming Brand</div>
+        <h2>Chéro Minecraft</h2>
+        <p class="hero-sub">Minecraft • Live Streams • Cinematic Gaming</p>
+
+        <div class="hero-buttons">
+          <a href="#videos" class="btn btn-primary">Watch Now</a>
+          <a href="#socials" class="btn btn-secondary">Subscribe</a>
+        </div>
+      </div>
+
+      <div class="hero-video card">
+        <div class="video-frame">
+          <iframe
+            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
+            title="YouTube video"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="section about-section">
+    <div class="about-bg"></div>
+    <div class="container section-content">
+      <h3>About the Channel</h3>
+      <p>
+        This is a Minecraft-focused gaming channel where creativity meets fun.
+        Expect cinematic content, experimental gameplay, and entertaining
+        streams.
+      </p>
+    </div>
+  </section>
+
+  <section id="videos" class="section">
+    <div class="container">
+      <h3>Videos</h3>
+      <div class="grid three-grid">
+        <article class="card info-card">
+          <span class="tag green">Latest Series</span>
+          <h4>Minecraft Survival Adventures</h4>
+          <p>Funny experiments, crazy moments, and blocky chaos.</p>
+          <a href="https://www.youtube.com/" target="_blank" class="btn btn-small btn-primary">Watch</a>
+        </article>
+
+        <article class="card info-card">
+          <span class="tag green">Popular</span>
+          <h4>Live Stream Highlights</h4>
+          <p>Best clips from intense and fun gaming streams.</p>
+          <a href="https://www.youtube.com/" target="_blank" class="btn btn-small btn-primary">Watch</a>
+        </article>
+
+        <article class="card info-card">
+          <span class="tag green">New</span>
+          <h4>Tips, Tricks & Tutorials</h4>
+          <p>Quick gaming guides and smart strategies for viewers.</p>
+          <a href="https://www.youtube.com/" target="_blank" class="btn btn-small btn-primary">Watch</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="shop" class="section">
+    <div class="container">
+      <div class="section-top">
+        <div>
+          <h3>Shop My T-Shirts</h3>
+          <p class="section-desc">
+            Wear the Rolx vibe with gaming-inspired merch made for your community.
+          </p>
+        </div>
+        <button id="toggle-products" class="btn btn-secondary">View More Products</button>
+      </div>
+
+      <div class="grid three-grid">
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Rolx Classic Tee</h4>
+            <span class="price">₹799</span>
+          </div>
+          <p>Minimal gaming merch with clean front branding.</p>
+          <small>Sizes: S / M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Minecraft Vibes Tee</h4>
+            <span class="price">₹899</span>
+          </div>
+          <p>Bold creator-style t-shirt inspired by your gaming world.</p>
+          <small>Sizes: M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Streamer Edition Tee</h4>
+            <span class="price">₹999</span>
+          </div>
+          <p>Premium look for fans who want the full Rolx vibe.</p>
+          <small>Sizes: S / M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+      </div>
+
+      <div id="more-products" class="grid three-grid hidden-block">
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Purple Drop Tee</h4>
+            <span class="price">₹849</span>
+          </div>
+          <p>Clean purple gradient merch with a strong creator vibe.</p>
+          <small>Sizes: S / M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Pixel Block Tee</h4>
+            <span class="price">₹899</span>
+          </div>
+          <p>Minecraft-inspired streetwear for true gaming fans.</p>
+          <small>Sizes: M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Night Stream Tee</h4>
+            <span class="price">₹949</span>
+          </div>
+          <p>Dark aesthetic t-shirt made for your live stream audience.</p>
+          <small>Sizes: S / M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Creator Energy Tee</h4>
+            <span class="price">₹929</span>
+          </div>
+          <p>A bold everyday merch piece with a modern gamer look.</p>
+          <small>Sizes: S / M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Rolx Neon Tee</h4>
+            <span class="price">₹979</span>
+          </div>
+          <p>Neon-inspired design with esports style attitude.</p>
+          <small>Sizes: M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+
+        <article class="card product-card">
+          <div class="product-preview">T-Shirt Preview</div>
+          <div class="product-head">
+            <h4>Limited Drop Tee</h4>
+            <span class="price">₹1099</span>
+          </div>
+          <p>Premium limited edition merch for your core community.</p>
+          <small>Sizes: S / M / L / XL</small>
+          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="socials" class="section">
+    <div class="container">
+      <h3 class="center">Connect with Me</h3>
+      <p class="center muted">Follow my journey across platforms</p>
+
+      <div class="grid three-grid socials-grid">
+        <a href="#" target="_blank" class="card social-card">
+          <h4>Instagram</h4>
+          <p>Behind the scenes & edits</p>
+        </a>
+
+        <a href="#" target="_blank" class="card social-card">
+          <h4>Facebook</h4>
+          <p>Community & updates</p>
+        </a>
+
+        <a href="#" target="_blank" class="card social-card">
+          <h4>Twitch</h4>
+          <p>Live gaming streams</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    © 2026 Chéro Minecraft • Made by Noble MB
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
