@@ -10,11 +10,25 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- LOADER -->
+  <div id="loader" class="loader">
+    <div class="loader-content">
+      <div class="loader-logo">CHÉRO</div>
+      <div class="loader-bar">
+        <span class="loader-fill"></span>
+      </div>
+      <p>Loading cinematic Minecraft vibes...</p>
+    </div>
+  </div>
+
   <div class="site-bg">
     <div class="floating-orb orb-1"></div>
     <div class="floating-orb orb-2"></div>
     <div class="floating-orb orb-3"></div>
     <div class="floating-orb orb-4"></div>
+    <div class="cinematic-fog fog-1"></div>
+    <div class="cinematic-fog fog-2"></div>
+    <div id="stars"></div>
     <div id="particles"></div>
     <div id="cursor-trail"></div>
     <div id="mouse-light"></div>
@@ -43,18 +57,22 @@
         <div class="badge">Cinematic Gaming Brand</div>
         <h2>Chéro Minecraft</h2>
         <p class="hero-sub">Minecraft • Live Streams • Cinematic Gaming</p>
+        <p class="hero-desc">
+          A calm but powerful Minecraft world filled with cinematic moments,
+          creative gameplay, live streams, and beautiful blocky adventures.
+        </p>
 
         <div class="hero-buttons">
-          <a href="#videos" class="btn btn-primary">Watch Now</a>
-          <a href="#socials" class="btn btn-secondary">Subscribe</a>
+          <a href="#videos" class="btn btn-primary sfx-btn">Watch Now</a>
+          <a href="https://www.instagram.com/rolx_official/" target="_blank" class="btn btn-secondary sfx-btn">Follow Me</a>
         </div>
       </div>
 
-      <div class="hero-video card">
+      <div class="hero-video card cinematic-card">
         <div class="video-frame">
           <iframe
-            src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-            title="YouTube video"
+            src="https://www.youtube.com/embed/yOQPF7U_kfA"
+            title="Chéro Minecraft YouTube video"
             allowfullscreen
           ></iframe>
         </div>
@@ -68,8 +86,9 @@
       <h3>About the Channel</h3>
       <p>
         This is a Minecraft-focused gaming channel where creativity meets fun.
-        Expect cinematic content, experimental gameplay, and entertaining
-        streams.
+        Expect cinematic content, experimental gameplay, relaxing vibes, and
+        entertaining live streams built for viewers who love a peaceful but
+        exciting blocky world.
       </p>
     </div>
   </section>
@@ -78,25 +97,25 @@
     <div class="container">
       <h3>Videos</h3>
       <div class="grid three-grid">
-        <article class="card info-card">
-          <span class="tag green">Latest Series</span>
+        <article class="card info-card cinematic-card">
+          <span class="tag green">Live Stream</span>
           <h4>Minecraft Survival Adventures</h4>
-          <p>Funny experiments, crazy moments, and blocky chaos.</p>
-          <a href="https://www.youtube.com/" target="_blank" class="btn btn-small btn-primary">Watch</a>
+          <p>Funny experiments, crazy moments, and blocky chaos from the live stream.</p>
+          <a href="https://www.youtube.com/live/yOQPF7U_kfA?si=wK_pFIQ3KiwKUs9H" target="_blank" class="btn btn-small btn-primary sfx-btn">Watch</a>
         </article>
 
-        <article class="card info-card">
+        <article class="card info-card cinematic-card">
           <span class="tag green">Popular</span>
           <h4>Live Stream Highlights</h4>
-          <p>Best clips from intense and fun gaming streams.</p>
-          <a href="https://www.youtube.com/" target="_blank" class="btn btn-small btn-primary">Watch</a>
+          <p>Best clips from intense and fun gaming streams on your channel.</p>
+          <a href="https://youtu.be/W9Wb4CLom34?si=cZQp-QN66-1i4pv_" target="_blank" class="btn btn-small btn-primary sfx-btn">Watch</a>
         </article>
 
-        <article class="card info-card">
+        <article class="card info-card cinematic-card">
           <span class="tag green">New</span>
           <h4>Tips, Tricks & Tutorials</h4>
-          <p>Quick gaming guides and smart strategies for viewers.</p>
-          <a href="https://www.youtube.com/" target="_blank" class="btn btn-small btn-primary">Watch</a>
+          <p>Quick gaming guides and smart Minecraft strategies for your audience.</p>
+          <a href="https://youtu.be/obFCnY9v0k4?si=F6TkrfC5DGy1KXX5" target="_blank" class="btn btn-small btn-primary sfx-btn">Watch</a>
         </article>
       </div>
     </div>
@@ -111,11 +130,11 @@
             Wear the Rolx vibe with gaming-inspired merch made for your community.
           </p>
         </div>
-        <button id="toggle-products" class="btn btn-secondary">View More Products</button>
+        <button id="toggle-products" class="btn btn-secondary sfx-btn">View More Products</button>
       </div>
 
       <div class="grid three-grid">
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Rolx Classic Tee</h4>
@@ -123,10 +142,10 @@
           </div>
           <p>Minimal gaming merch with clean front branding.</p>
           <small>Sizes: S / M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
 
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Minecraft Vibes Tee</h4>
@@ -134,10 +153,10 @@
           </div>
           <p>Bold creator-style t-shirt inspired by your gaming world.</p>
           <small>Sizes: M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
 
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Streamer Edition Tee</h4>
@@ -145,12 +164,12 @@
           </div>
           <p>Premium look for fans who want the full Rolx vibe.</p>
           <small>Sizes: S / M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
       </div>
 
       <div id="more-products" class="grid three-grid hidden-block">
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Purple Drop Tee</h4>
@@ -158,10 +177,10 @@
           </div>
           <p>Clean purple gradient merch with a strong creator vibe.</p>
           <small>Sizes: S / M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
 
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Pixel Block Tee</h4>
@@ -169,10 +188,10 @@
           </div>
           <p>Minecraft-inspired streetwear for true gaming fans.</p>
           <small>Sizes: M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
 
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Night Stream Tee</h4>
@@ -180,10 +199,10 @@
           </div>
           <p>Dark aesthetic t-shirt made for your live stream audience.</p>
           <small>Sizes: S / M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
 
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Creator Energy Tee</h4>
@@ -191,10 +210,10 @@
           </div>
           <p>A bold everyday merch piece with a modern gamer look.</p>
           <small>Sizes: S / M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
 
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Rolx Neon Tee</h4>
@@ -202,10 +221,10 @@
           </div>
           <p>Neon-inspired design with esports style attitude.</p>
           <small>Sizes: M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
 
-        <article class="card product-card">
+        <article class="card product-card cinematic-card">
           <div class="product-preview">T-Shirt Preview</div>
           <div class="product-head">
             <h4>Limited Drop Tee</h4>
@@ -213,7 +232,7 @@
           </div>
           <p>Premium limited edition merch for your core community.</p>
           <small>Sizes: S / M / L / XL</small>
-          <a href="#" class="btn btn-small btn-primary">Buy Now</a>
+          <a href="#" class="btn btn-small btn-primary sfx-btn">Buy Now</a>
         </article>
       </div>
     </div>
@@ -225,17 +244,17 @@
       <p class="center muted">Follow my journey across platforms</p>
 
       <div class="grid three-grid socials-grid">
-        <a href="#" target="_blank" class="card social-card">
+        <a href="https://www.instagram.com/rolx_official/" target="_blank" class="card social-card cinematic-card sfx-btn">
           <h4>Instagram</h4>
           <p>Behind the scenes & edits</p>
         </a>
 
-        <a href="#" target="_blank" class="card social-card">
+        <a href="https://www.facebook.com/share/18sPHu4CUM/" target="_blank" class="card social-card cinematic-card sfx-btn">
           <h4>Facebook</h4>
           <p>Community & updates</p>
         </a>
 
-        <a href="#" target="_blank" class="card social-card">
+        <a href="https://m.twitch.tv/rolxofficial?desktop-redirect=true" target="_blank" class="card social-card cinematic-card sfx-btn">
           <h4>Twitch</h4>
           <p>Live gaming streams</p>
         </a>
