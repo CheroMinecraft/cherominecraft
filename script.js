@@ -14,32 +14,59 @@ let ambientOn = false;
 let ambientCtx = null;
 let ambientNodes = null;
 
-siteNav.classList.add("nav-hidden");
-heroContent.classList.add("hero-hidden");
+// Hide nav and hero at first
+if (siteNav) siteNav.classList.add("nav-hidden");
+if (heroContent) heroContent.classList.add("hero-hidden");
 
-setTimeout(() => {
-  intro.classList.add("hidden-intro");
-  siteNav.classList.remove("nav-hidden");
-  heroContent.classList.remove("hero-hidden");
-}, 2400);
+// Safe intro hide function
+function hideIntro() {
+  if (intro) intro.classList.add("hidden-intro");
+  if (siteNav) siteNav.classList.remove("nav-hidden");
+  if (heroContent) heroContent.classList.remove("hero-hidden");
+}
 
-window.addEventListener("scroll", () => {
-  const scrollY = window.scrollY;
-  heroGradient.style.transform = `translateY(${scrollY * 0.12}px)`;
-  blob1.style.transform = `translateY(${scrollY * 0.1}px)`;
-  blob2.style.transform = `translateY(${scrollY * -0.08}px)`;
+// Hide intro after load
+window.addEventListener("load", () => {
+  setTimeout(hideIntro, 2400);
 });
 
+// Backup safety
+setTimeout(hideIntro, 3000);
+
+// Scroll parallax
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+
+  if (heroGradient) {
+    heroGradient.style.transform = `translateY(${scrollY * 0.12}px)`;
+  }
+
+  if (blob1) {
+    blob1.style.transform = `translateY(${scrollY * 0.1}px)`;
+  }
+
+  if (blob2) {
+    blob2.style.transform = `translateY(${scrollY * -0.08}px)`;
+  }
+});
+
+// Reveal sections
 const revealSections = document.querySelectorAll(".reveal");
 
 if ("IntersectionObserver" in window) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.classList.remove("reveal-hidden");
-      entry.target.classList.add("reveal-visible");
-    });
-  }, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.remove("reveal-hidden");
+        entry.target.classList.add("reveal-visible");
+      });
+    },
+    {
+      threshold: 0.15,
+      rootMargin: "0px 0px -10% 0px",
+    }
+  );
 
   revealSections.forEach((section) => {
     section.classList.add("reveal-hidden");
@@ -51,7 +78,10 @@ if ("IntersectionObserver" in window) {
   });
 }
 
+// Background particles
 function generateParticles() {
+  if (!bgParticles) return;
+
   bgParticles.innerHTML = "";
   const count = window.innerWidth < 768 ? 28 : 56;
 
@@ -78,14 +108,21 @@ function generateParticles() {
 generateParticles();
 window.addEventListener("resize", generateParticles);
 
+// Hover parallax effect
 document.querySelectorAll(".box-hover").forEach((card) => {
   card.addEventListener("mousemove", (event) => {
     const rect = card.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width - 0.5;
     const py = (event.clientY - rect.top) / rect.height - 0.5;
 
-    card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
-    card.style.setProperty("--my", `${((event.clientY - rect.left) / rect.width) * 100}%`);
+    card.style.setProperty(
+      "--mx",
+      `${((event.clientX - rect.left) / rect.width) * 100}%`
+    );
+    card.style.setProperty(
+      "--my",
+      `${((event.clientY - rect.top) / rect.height) * 100}%`
+    );
     card.style.setProperty("--px", `${px * 16}px`);
     card.style.setProperty("--py", `${py * 12}px`);
     card.style.setProperty("--px2", `${px * -10}px`);
@@ -102,26 +139,36 @@ document.querySelectorAll(".box-hover").forEach((card) => {
   });
 });
 
-toggleProducts.addEventListener("click", () => {
-  moreProducts.classList.toggle("hidden");
-  toggleProducts.textContent = moreProducts.classList.contains("hidden")
-    ? "View More Products"
-    : "Show Less Products";
-});
+// Show more / less products
+if (toggleProducts && moreProducts) {
+  toggleProducts.addEventListener("click", () => {
+    moreProducts.classList.toggle("hidden");
+    toggleProducts.textContent = moreProducts.classList.contains("hidden")
+      ? "View More Products"
+      : "Show Less Products";
+  });
+}
 
+// Ambient sound
 function enableAmbient() {
   const AudioCtor = window.AudioContext || window.webkitAudioContext;
   if (!AudioCtor) return;
 
+  // prevent multiple audio contexts
+  if (ambientCtx) return;
+
   ambientCtx = new AudioCtor();
+
   const osc = ambientCtx.createOscillator();
   const gain = ambientCtx.createGain();
   const filter = ambientCtx.createBiquadFilter();
 
   osc.type = "sine";
   osc.frequency.setValueAtTime(60, ambientCtx.currentTime);
+
   filter.type = "lowpass";
   filter.frequency.setValueAtTime(400, ambientCtx.currentTime);
+
   gain.gain.setValueAtTime(0.0001, ambientCtx.currentTime);
   gain.gain.linearRampToValueAtTime(0.02, ambientCtx.currentTime + 1);
 
@@ -135,6 +182,7 @@ function enableAmbient() {
 
 function disableAmbient() {
   if (!ambientNodes || !ambientCtx) return;
+
   const { osc, gain } = ambientNodes;
   const now = ambientCtx.currentTime;
 
@@ -144,21 +192,33 @@ function disableAmbient() {
 
   try {
     osc.stop(now + 0.55);
-  } catch (e) {}
+  } catch (e) {
+    console.error("Error stopping oscillator:", e);
+  }
 
   ambientNodes = null;
+
+  setTimeout(() => {
+    if (ambientCtx) {
+      ambientCtx.close().catch(() => {});
+      ambientCtx = null;
+    }
+  }, 700);
 }
 
-audioToggle.addEventListener("click", () => {
-  ambientOn = !ambientOn;
+// Audio button
+if (audioToggle) {
+  audioToggle.addEventListener("click", async () => {
+    ambientOn = !ambientOn;
 
-  if (ambientOn) {
-    enableAmbient();
-    audioToggle.classList.add("active");
-    audioStatus.textContent = "Sound ON";
-  } else {
-    disableAmbient();
-    audioToggle.classList.remove("active");
-    audioStatus.textContent = "Enable Sound";
-  }
-});
+    if (ambientOn) {
+      enableAmbient();
+      audioToggle.classList.add("active");
+      if (audioStatus) audioStatus.textContent = "Sound ON";
+    } else {
+      disableAmbient();
+      audioToggle.classList.remove("active");
+      if (audioStatus) audioStatus.textContent = "Enable Sound";
+    }
+  });
+}
