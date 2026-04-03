@@ -371,22 +371,57 @@ button { font: inherit; cursor: pointer; }
 .nav-link:hover::after { width: 100%; }
 
 .about-section {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 100px 20px;
-  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
 }
 
-.about-title {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #ffffff;
+.about-box {
+  max-width: 800px;
+  width: 100%;
+  padding: 30px 35px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(168, 85, 247, 0.25);
+  box-shadow: 0 0 25px rgba(168, 85, 247, 0.12);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s ease;
 }
 
-.about-text {
-  font-size: 1.1rem;
+.about-box.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#typing-text {
+  font-size: 1.25rem;
   line-height: 1.9;
-  color: rgba(255, 255, 255, 0.8);
+  color: #ffffff;
+  font-family: "Poppins", sans-serif;
+  text-shadow: 0 0 12px rgba(168, 85, 247, 0.35);
+  min-height: 90px;
+}
+
+#typing-text::after {
+  content: "|";
+  margin-left: 4px;
+  color: #a855f7;
+  animation: blink 0.8s infinite;
+  text-shadow: 0 0 10px rgba(168, 85, 247, 0.8);
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero {
