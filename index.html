@@ -87,17 +87,56 @@
   </section>
 
   <section class="about-section">
-  <h2 class="about-title">About Me</h2>
-  <p class="about-text reveal">
-    I’m a creator who prefers to let the work speak louder than identity.
-    Passionate about futuristic design, immersive digital experiences, and
-    cinematic Minecraft storytelling, I bring ideas to life through creativity
-    and technology. Every project I create is a blend of vision,
-    experimentation, and emotion, built to feel unique, memorable, and alive.
-    This space is more than just a website — it’s a reflection of my
-    imagination and the world I’m creating.
-  </p>
+  <div class="about-box">
+    <p id="typing-text"></p>
+  </div>
 </section>
+
+<script>
+  const lines = [
+    "I’m a creator driven by imagination and innovation.",
+    "I design futuristic digital experiences and cinematic content.",
+    "I turn ideas into visuals, stories, and immersive worlds.",
+    "This platform reflects my vision, creativity, and passion."
+  ];
+
+  const typingText = document.getElementById("typing-text");
+  let lineIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function typeEffect() {
+    const currentLine = lines[lineIndex];
+
+    if (!isDeleting) {
+      typingText.innerHTML = currentLine.substring(0, charIndex + 1);
+      charIndex++;
+
+      if (charIndex === currentLine.length) {
+        isDeleting = true;
+        setTimeout(typeEffect, 1400);
+        return;
+      }
+    } else {
+      typingText.innerHTML = currentLine.substring(0, charIndex - 1);
+      charIndex--;
+
+      if (charIndex === 0) {
+        isDeleting = false;
+        lineIndex = (lineIndex + 1) % lines.length;
+      }
+    }
+
+    setTimeout(typeEffect, isDeleting ? 35 : 70);
+  }
+
+  window.addEventListener("load", () => {
+    setTimeout(() => {
+      document.querySelector(".about-box").classList.add("show");
+      typeEffect();
+    }, 400);
+  });
+</script>
 
   <section id="videos" class="section reveal" data-reveal-id="videos">
     <div class="container">
