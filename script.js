@@ -1,79 +1,91 @@
 const intro = document.getElementById("intro");
-const navbar = document.getElementById("navbar");
-const customCursor = document.getElementById("customCursor");
-const trails = Array.from({ length: 6 }, (_, i) => document.getElementById(`trail${i}`));
-const revealEls = document.querySelectorAll(".reveal");
-const parallaxCards = document.querySelectorAll(".card");
-const toggleProductsBtn = document.getElementById("toggleProducts");
+const siteNav = document.getElementById("siteNav");
+const heroContent = document.getElementById("heroContent");
+const heroGradient = document.getElementById("heroGradient");
+const blob1 = document.getElementById("blob1");
+const blob2 = document.getElementById("blob2");
+const bgParticles = document.getElementById("bgParticles");
+const toggleProducts = document.getElementById("toggleProducts");
 const moreProducts = document.getElementById("moreProducts");
-const soundToggle = document.getElementById("soundToggle");
-const audioOrb = document.getElementById("audioOrb");
-const audioRing = document.getElementById("audioRing");
+const audioToggle = document.getElementById("audioToggle");
+const audioStatus = document.getElementById("audioStatus");
 
 let ambientOn = false;
-let audioCtx = null;
-let ambientOsc = null;
-let ambientGain = null;
-let analyser = null;
-let micData = null;
-let animationFrame = null;
+let ambientCtx = null;
+let ambientNodes = null;
+
+siteNav.classList.add("nav-hidden");
+heroContent.classList.add("hero-hidden");
 
 setTimeout(() => {
-  intro.classList.add("hide");
-  navbar.classList.remove("hidden-nav");
-}, 2600);
+  intro.classList.add("hidden-intro");
+  siteNav.classList.remove("nav-hidden");
+  heroContent.classList.remove("hero-hidden");
+}, 2400);
 
-navbar.classList.add("hidden-nav");
-
-const trailPoints = Array.from({ length: 6 }, () => ({ x: 0, y: 0 }));
-
-window.addEventListener("mousemove", (e) => {
-  if (customCursor) {
-    customCursor.style.left = `${e.clientX}px`;
-    customCursor.style.top = `${e.clientY}px`;
-  }
-
-  trailPoints[0].x = e.clientX;
-  trailPoints[0].y = e.clientY;
-
-  for (let i = 1; i < trailPoints.length; i++) {
-    trailPoints[i].x += (trailPoints[i - 1].x - trailPoints[i].x) * 0.4;
-    trailPoints[i].y += (trailPoints[i - 1].y - trailPoints[i].y) * 0.4;
-  }
-
-  trails.forEach((el, i) => {
-    if (!el) return;
-    el.style.left = `${trailPoints[i].x}px`;
-    el.style.top = `${trailPoints[i].y}px`;
-    el.style.opacity = `${0.6 - i * 0.1}`;
-  });
+window.addEventListener("scroll", () => {
+  const scrollY = window.scrollY;
+  heroGradient.style.transform = `translateY(${scrollY * 0.12}px)`;
+  blob1.style.transform = `translateY(${scrollY * 0.1}px)`;
+  blob2.style.transform = `translateY(${scrollY * -0.08}px)`;
 });
 
-document.addEventListener("mouseover", (e) => {
-  const interactive = e.target.closest("a, button");
-  if (customCursor) {
-    customCursor.classList.toggle("active", Boolean(interactive));
-  }
-});
+const revealSections = document.querySelectorAll(".reveal");
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add("visible");
+if ("IntersectionObserver" in window) {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.remove("reveal-hidden");
+      entry.target.classList.add("reveal-visible");
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
+
+  revealSections.forEach((section) => {
+    section.classList.add("reveal-hidden");
+    observer.observe(section);
   });
-}, { threshold: 0.15, rootMargin: "0px 0px -10% 0px" });
+} else {
+  revealSections.forEach((section) => {
+    section.classList.add("reveal-visible");
+  });
+}
 
-revealEls.forEach((el) => observer.observe(el));
+function generateParticles() {
+  bgParticles.innerHTML = "";
+  const count = window.innerWidth < 768 ? 28 : 56;
 
-parallaxCards.forEach((card) => {
-  card.addEventListener("mousemove", (e) => {
+  for (let i = 0; i < count; i += 1) {
+    const particle = document.createElement("span");
+    const size = Math.random() * 6 + 3;
+    const left = Math.random() * 100;
+    const delay = Math.random() * 8;
+    const duration = Math.random() * 8 + 10;
+    const drift = (Math.random() - 0.5) * 180;
+
+    particle.style.width = `${size}px`;
+    particle.style.height = `${size}px`;
+    particle.style.left = `${left}%`;
+    particle.style.animationDelay = `${delay}s`;
+    particle.style.animationDuration = `${duration}s`;
+    particle.style.setProperty("--drift-x", `${drift}px`);
+    particle.style.opacity = `${0.16 + Math.random() * 0.28}`;
+
+    bgParticles.appendChild(particle);
+  }
+}
+
+generateParticles();
+window.addEventListener("resize", generateParticles);
+
+document.querySelectorAll(".box-hover").forEach((card) => {
+  card.addEventListener("mousemove", (event) => {
     const rect = card.getBoundingClientRect();
-    const mx = ((e.clientX - rect.left) / rect.width) * 100;
-    const my = ((e.clientY - rect.top) / rect.height) * 100;
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
+    const px = (event.clientX - rect.left) / rect.width - 0.5;
+    const py = (event.clientY - rect.top) / rect.height - 0.5;
 
-    card.style.setProperty("--mx", `${mx}%`);
-    card.style.setProperty("--my", `${my}%`);
+    card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+    card.style.setProperty("--my", `${((event.clientY - rect.left) / rect.width) * 100}%`);
     card.style.setProperty("--px", `${px * 16}px`);
     card.style.setProperty("--py", `${py * 12}px`);
     card.style.setProperty("--px2", `${px * -10}px`);
@@ -90,98 +102,63 @@ parallaxCards.forEach((card) => {
   });
 });
 
-toggleProductsBtn?.addEventListener("click", () => {
+toggleProducts.addEventListener("click", () => {
   moreProducts.classList.toggle("hidden");
-  toggleProductsBtn.textContent = moreProducts.classList.contains("hidden")
+  toggleProducts.textContent = moreProducts.classList.contains("hidden")
     ? "View More Products"
     : "Show Less Products";
 });
 
-function ensureAudioContext() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === "suspended") audioCtx.resume();
-  return audioCtx;
-}
+function enableAmbient() {
+  const AudioCtor = window.AudioContext || window.webkitAudioContext;
+  if (!AudioCtor) return;
 
-function startAmbientSound() {
-  const ctx = ensureAudioContext();
-  ambientOsc = ctx.createOscillator();
-  ambientGain = ctx.createGain();
-  const filter = ctx.createBiquadFilter();
+  ambientCtx = new AudioCtor();
+  const osc = ambientCtx.createOscillator();
+  const gain = ambientCtx.createGain();
+  const filter = ambientCtx.createBiquadFilter();
 
-  ambientOsc.type = "sine";
-  ambientOsc.frequency.setValueAtTime(60, ctx.currentTime);
+  osc.type = "sine";
+  osc.frequency.setValueAtTime(60, ambientCtx.currentTime);
   filter.type = "lowpass";
-  filter.frequency.setValueAtTime(400, ctx.currentTime);
-  ambientGain.gain.setValueAtTime(0.0001, ctx.currentTime);
-  ambientGain.gain.linearRampToValueAtTime(0.02, ctx.currentTime + 1);
+  filter.frequency.setValueAtTime(400, ambientCtx.currentTime);
+  gain.gain.setValueAtTime(0.0001, ambientCtx.currentTime);
+  gain.gain.linearRampToValueAtTime(0.02, ambientCtx.currentTime + 1);
 
-  ambientOsc.connect(filter);
-  filter.connect(ambientGain);
-  ambientGain.connect(ctx.destination);
-  ambientOsc.start();
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(ambientCtx.destination);
+  osc.start();
+
+  ambientNodes = { osc, gain };
 }
 
-function stopAmbientSound() {
-  if (!audioCtx || !ambientGain || !ambientOsc) return;
-  const now = audioCtx.currentTime;
-  ambientGain.gain.cancelScheduledValues(now);
-  ambientGain.gain.setValueAtTime(ambientGain.gain.value || 0.02, now);
-  ambientGain.gain.linearRampToValueAtTime(0.0001, now + 0.5);
-  try { ambientOsc.stop(now + 0.55); } catch (e) {}
-  ambientOsc = null;
-  ambientGain = null;
-}
+function disableAmbient() {
+  if (!ambientNodes || !ambientCtx) return;
+  const { osc, gain } = ambientNodes;
+  const now = ambientCtx.currentTime;
 
-soundToggle?.addEventListener("click", async () => {
-  ambientOn = !ambientOn;
-  soundToggle.textContent = ambientOn ? "Sound ON" : "Enable Sound";
-  if (ambientOn) startAmbientSound();
-  else stopAmbientSound();
-});
-
-async function startMicReactiveVisual() {
-  if (!navigator.mediaDevices?.getUserMedia) return;
+  gain.gain.cancelScheduledValues(now);
+  gain.gain.setValueAtTime(gain.gain.value || 0.02, now);
+  gain.gain.linearRampToValueAtTime(0.0001, now + 0.5);
 
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    const ctx = ensureAudioContext();
-    analyser = ctx.createAnalyser();
-    analyser.fftSize = 64;
-    const source = ctx.createMediaStreamSource(stream);
-    source.connect(analyser);
-    micData = new Uint8Array(analyser.frequencyBinCount);
+    osc.stop(now + 0.55);
+  } catch (e) {}
 
-    const tick = () => {
-      analyser.getByteFrequencyData(micData);
-      const avg = micData.reduce((a, b) => a + b, 0) / micData.length;
-      const bass = micData.slice(0, 6).reduce((a, b) => a + b, 0) / 6;
-      const level = Math.max(0.18, avg / 255);
-      const beat = bass / 255;
-
-      const orbSize = 220 + beat * 120;
-      const ringSize = 180 + beat * 120;
-
-      audioOrb.style.width = `${orbSize}px`;
-      audioOrb.style.height = `${orbSize}px`;
-      audioOrb.style.opacity = `${0.18 + beat * 0.35}`;
-
-      audioRing.style.width = `${ringSize}px`;
-      audioRing.style.height = `${ringSize}px`;
-      audioRing.style.opacity = `${beat * 0.42}`;
-      audioRing.style.boxShadow = `0 0 ${18 + beat * 28}px rgba(204,122,255,${0.12 + beat * 0.18})`;
-
-      document.documentElement.style.setProperty("--live-brightness", `${1 + level * 0.3}`);
-
-      animationFrame = requestAnimationFrame(tick);
-    };
-
-    tick();
-  } catch (err) {
-    // Silent fallback if mic permission is denied
-  }
+  ambientNodes = null;
 }
 
-startMicReactiveVisual();
+audioToggle.addEventListener("click", () => {
+  ambientOn = !ambientOn;
+
+  if (ambientOn) {
+    enableAmbient();
+    audioToggle.classList.add("active");
+    audioStatus.textContent = "Sound ON";
+  } else {
+    disableAmbient();
+    audioToggle.classList.remove("active");
+    audioStatus.textContent = "Enable Sound";
+  }
+});
